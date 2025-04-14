@@ -10,11 +10,8 @@ export default function Home() {
   const [lives, setLives] = useState(3);
   const [paused, setPaused] = useState(false);
   const [theme, setTheme] = useState('light');
-  const [difficulty, setDifficulty] = useState('medium');
   const [highScore, setHighScore] = useState(0);
   const [ballColor, setBallColor] = useState('#0070f3');
-  const [ballDesigns, setBallDesigns] = useState(['#0070f3', '#ff5733', '#28a745']);
-  const [selectedBallDesign, setSelectedBallDesign] = useState('#0070f3');
   const [showControls, setShowControls] = useState(false);
   const [shieldActive, setShieldActive] = useState(false);
   const shieldTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -72,7 +69,7 @@ export default function Home() {
         const lastObstacleY = prev.length > 0 ? Math.max(...prev.map((o) => o.y)) : 600;
         const minGap = Math.random() < 0.5 ? 200 : 300;
 
-        if (lastObstacleY > minGap && Math.random() < (difficulty === 'easy' ? 0.05 : difficulty === 'hard' ? 0.15 : 0.1)) {
+        if (lastObstacleY > minGap && Math.random() < 0.1) {
           const newObstacles = [];
           const emptyLane = Math.floor(Math.random() * 3);
           for (let i = 0; i < 3; i++) {
@@ -95,7 +92,7 @@ export default function Home() {
     }, 100);
 
     return () => clearInterval(interval);
-  }, [paused, speed, score, difficulty]);
+  }, [paused, speed, score]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
